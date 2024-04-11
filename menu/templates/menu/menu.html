@@ -1,0 +1,29 @@
+{% load menu_tags %}
+{% draw_menu 'main_menu' %}
+
+
+{% if main_menu %}
+    <ul>
+        {% for item in main_menu %}
+            <li>
+                <a href="{{ item.url }}">{{ item.name }}</a>
+                {% if item.children.all %}
+                    <ul>
+                        {% for child in item.children.all %}
+                            <li><a href="{{ child.url }}">{{ child.name }}</a></li>
+                            {% if child.children.all %}
+                                <ul>
+                                    {% for sub_child in child.children.all %}
+                                        <li><a href="{{ sub_child.url }}">{{ sub_child.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No menu items found.</p>
+{% endif %}
